@@ -8,17 +8,17 @@ import cartaz from '../../assets/img/ferro.jpg';
 export default function Filme(){
     const { idFilme } = useParams();
 
-    const [Filme, setFilme] = useState({})
+    const [Filmes, setFilmes] = useState({}) //Criação da Array vazia que posteriormente vai receber os dados da API
     
     useEffect(() => {
-        const requisicao = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/3/showtimes`)
+        const requisicao = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
         console.log(requisicao)
         requisicao.then((resposta) => {
-            setFilme(resposta.data)
+            setFilmes({...resposta.data})//Dados recebidos utilizando o Spread Operator
         })
     },[])
 
-	console.log(idFilme)
+	console.log(Filmes + "ESSE AQI")
     return(
         <>
         {/* <Link to="/assentos/:idSessao">Sessoes</Link> */}
@@ -27,19 +27,10 @@ export default function Filme(){
         <Date>
             <h1>Quinta-feira - 24/06/2021</h1>
             <Container>
-            <Button>15:00</Button>
+            <Button>45</Button>
             <Button>19:00</Button>
             </Container>
-        </Date>
-
-        <Date>
-            <h1>Quinta-feira - 24/06/2021</h1>
-            <Container>
-            <Button>15:00</Button>
-            <Button>19:00</Button>
-            </Container>
-        </Date>
-
+            </Date>
         <Link to="/assentos/:idSessao">
         <Footer>
         <Plate><img src={cartaz}/></Plate>
@@ -49,6 +40,23 @@ export default function Filme(){
         </>
     )
 }
+
+{/* <Date>
+            <h1>Quinta-feira - 24/06/2021</h1>
+            <Container>
+            <Button>15:00</Button>
+            <Button>19:00</Button>
+            </Container>
+            </Date> */}
+
+            {/* // {Filmes.map(Filme => <Date>
+            //     <h1>${Filme.days.weekday} - ${Filme.days.date}</h1>
+            //     <Container>
+            //     <Button>${Filme.days.showtimes[0].name}</Button>
+            //     <Button>${Filme.days.showtimes[1].name}</Button>
+            //     </Container>
+            // </Date>)} */}
+
 
 //STYLED COMPONENTS
 const Header = styled.header`

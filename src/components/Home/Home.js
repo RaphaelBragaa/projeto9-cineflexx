@@ -3,20 +3,22 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import styled from 'styled-components';
-import cartaz from '../../assets/img/ferro.jpg';
+
 
 //import cartaz from "./assets/img/ferro.jpg"
 
 export default function Home (){
-const [Home,setHome] = useState({})
+const [Homes,setHomes] = useState([]) //Criação da Array vazia que posteriormente vai receber os dados da API
 
 useEffect(() => {
     const requisicao = axios.get("https://mock-api.driven.com.br/api/v5/cineflex/movies")
     console.log(requisicao)
     requisicao.then((resposta) => {
-        setHome(resposta.data)
+        setHomes([...resposta.data])//Dados recebidos utilizando o Spread Operator
     })
 },[])
+
+console.log()
 
     return(
         <>
@@ -25,29 +27,7 @@ useEffect(() => {
             <h1>Selecione o filme</h1>
         </Selection>
         <Gallery>
-           <Link to="/sessoes/:idFilme"><Plate><img src={cartaz}/></Plate></Link> 
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-
-           <Plate><img src={cartaz}/></Plate> 
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-
-           <Plate><img src={cartaz}/></Plate> 
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-
-           <Plate><img src={cartaz}/></Plate> 
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
-           <Plate><img src={cartaz}/></Plate>
+           {Homes.map(Home => <Link to={`/sessoes/${Home.id}`}><Plate><img src={Home.posterURL}/></Plate></Link>)} 
         </Gallery>
         
          {/* <Link to="/sessoes/:idFilme">FILMES */}
