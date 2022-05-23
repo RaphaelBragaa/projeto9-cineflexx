@@ -8,54 +8,60 @@ import cartaz from '../../assets/img/ferro.jpg';
 export default function Filme(){
     const { idFilme } = useParams();
 
-    const [Filmes, setFilmes] = useState({}) //Criação da Array vazia que posteriormente vai receber os dados da API
-    
+    const [Filmes, setFilmes] = useState(false) //Criação da Array vazia que posteriormente vai receber os dados da API
+    const [Cartaz, setCartaz] = useState({})
     useEffect(() => {
         const requisicao = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
         console.log(requisicao)
         requisicao.then((resposta) => {
-            setFilmes({...resposta.data})//Dados recebidos utilizando o Spread Operator
-        })
+            setFilmes(resposta.data.days)//Dados recebidos utilizando o Spread Operator
+            setCartaz(resposta.data.posterURL)
+            
+        }).catch('Carregando...')
     },[])
+     
 
-	console.log(Filmes + "ESSE AQI")
+	if(Filmes === false){
+        return "esperando api responder"
+    } else {
+        console.log(Filmes)
+    }
     return(
         <>
-        {/* <Link to="/assentos/:idSessao">Sessoes</Link> */}
         <Header><h1>CINEFLEX</h1></Header> 
         <Selection><h1>Selecione o horário</h1></Selection>
-        <Date>
-            <h1>Quinta-feira - 24/06/2021</h1>
-            <Container>
-            <Button>45</Button>
-            <Button>19:00</Button>
-            </Container>
-            </Date>
-        <Link to="/assentos/:idSessao">
+        {Filmes.map(Filme => <Date>
+                <h1>{Filme.weekday} - {Filme.date}</h1>
+                 <Container>
+                 <Link to={`/assentos/${Filme.id}`}><Button>{Filme.showtimes[0].name}</Button></Link>
+                 <Link to={`/assentos/${Filme.id}`}><Button>{Filme.showtimes[1].name}</Button></Link>
+                </Container>
+         </Date>)}
+        
         <Footer>
-        <Plate><img src={cartaz}/></Plate>
-        <h1>Homem de Ferro</h1>
+        <Plate><img src={Cartaz}/></Plate>
+        <h1>Filme Escolhido</h1>
         </Footer>
-        </Link>
         </>
     )
 }
+// /* <Link to="/assentos/:idSessao">Sessoes</Link> */
 
-{/* <Date>
-            <h1>Quinta-feira - 24/06/2021</h1>
-            <Container>
-            <Button>15:00</Button>
-            <Button>19:00</Button>
-            </Container>
-            </Date> */}
+// /* <Date>
+//             <h1>Quinta-feira - 24/06/2021</h1>
+//             <Container>
+//             <Button>15:00</Button>
+//             <Button>19:00</Button>
+//             </Container>
+//             </Date> */}
 
-            {/* // {Filmes.map(Filme => <Date>
-            //     <h1>${Filme.days.weekday} - ${Filme.days.date}</h1>
-            //     <Container>
-            //     <Button>${Filme.days.showtimes[0].name}</Button>
-            //     <Button>${Filme.days.showtimes[1].name}</Button>
-            //     </Container>
-            // </Date>)} */}
+//             {/* // {Filmes.map(Filme => <Date>
+//             //     <h1>${Filme.days.weekday} - ${Filme.days.date}</h1>
+//             //     <Container>
+//             //     <Button>${Filme.days.showtimes[0].name}</Button>
+//             //     <Button>${Filme.days.showtimes[1].name}</Button>
+//             //     </Container>
+//             // </Date>)} */}
 
 
 //STYLED COMPONENTS

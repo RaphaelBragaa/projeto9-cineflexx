@@ -2,12 +2,11 @@
     import { useParams } from 'react-router-dom';
     import { useState } from "react/cjs/react.production.min";
     import styled from 'styled-components';
-    import cartaz from '../../assets/img/ferro.jpg';
+    import Footer from "../Footer/Footer";
+
 
     export default function Sessao(){
         
-    
-
         const{idSessao} = useParams()
         console.log(idSessao)
 
@@ -81,12 +80,8 @@
             <input type="text" placeholder="Digite seu CPF..."/>
             </Inputs>
             <Button>Reservar assento(s)</Button>
-            <Footer>
-            <Plate><img src={cartaz}/></Plate>
-            <h1>Quinta-feira - 15:00<br/>
-                Homem de Ferro 
-            </h1>
-            </Footer>
+            <Footer/>
+            
             </>
         )
 
@@ -133,26 +128,7 @@
     }
     `
 
-
-    const Footer = styled.footer`
-    @media (max-width: 767px) {
-        display:flex;
-        align-items:center;
-        position:fixed;
-        width:100%;
-        bottom:0;
-        margin:auto;
-        height:120px;
-        background-color:#DFE6ED;
-        border-top: 1px solid #9EADBA;
-
-        h1{
-            margin-left:20px;
-            font-size:26px;
-            font-family: 'Roboto', sans-serif;
-        }
-    }
-    `
+    
     const Plate = styled.div`
     @media (max-width: 767px){
         position:relative;
